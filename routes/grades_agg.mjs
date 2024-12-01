@@ -87,8 +87,8 @@ router.get("/learner/:id/avg-class", async (req, res) => {
 
 
 // Create a GET route at /grades/stats
-// Within this route, create an aggregation pipeline that returns
-// the following information:
+// Within this route, create an aggregation pipeline
+// that returns the following information:
 // The number of learners with a weighted average 
 // (as calculated by the existing routes) higher than 70%.
 // The total number of learners.
@@ -185,19 +185,13 @@ router
     let collection = await db.collection("grades");
 
     // DESCENDING ORDER 
-    // await collection.createIndex({ learner_id: 1, class_id: 1 });
+    await collection.createIndex({ learner_id: 1, class_id: 1 });
 
     let result = await collection
       .aggregate([
-        // {
-        //   $match: { class_id: classId },
-        // },
         {
           $match: { class_id: Number(req.params.id) },
         },
-        //  {
-        //    $match: { learner_id: Number(req.params.id) },
-        //  },
         {
           $unwind: { path: "$scores" },
         },
@@ -282,6 +276,7 @@ router
           }
         }
       ])
+
       .toArray();
 
     if (!result) {
@@ -293,13 +288,11 @@ router
 
 
 // DESCENDING ORDER 
-const createIndexes = async () => {
-  const collection = await db.collection("grades");
-  await collection.createIndex({ learner_id: 1, class_id: 1 });
-  // await collection.createIndex({ class_id: 1 });
-  // await collection.createIndex({ learner_id: 1 });
-};
-createIndexes();
+// const createIndexes = async () => {
+//   const collection = await db.collection("grades");
+//   await collection.createIndex({ learner_id: 1, class_id: 1 });
+// };
+// createIndexes();
 
 
 //VALIDATION
