@@ -287,13 +287,6 @@ router
   });
 
 
-// DESCENDING ORDER 
-// const createIndexes = async () => {
-//   const collection = await db.collection("grades");
-//   await collection.createIndex({ learner_id: 1, class_id: 1 });
-// };
-// createIndexes();
-
 
 //VALIDATION
 async () => {
