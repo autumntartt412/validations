@@ -16,12 +16,12 @@ const gradesSchema = {
 
 // Find invalid documents
 
-// app.get("/", async (req, res) => {
-//   let collection = await db.collection("grades");
+app.get("/", async (req, res) => {
+  let collection = await db.collection("grades");
 
-// let result = await collection.find({ $nor: [gradesSchema] }).toArray();
-// res.send(result).status(204);
-// })
+let result = await collection.find({ $nor: [gradesSchema] }).toArray();
+res.send(result).status(204);
+})
 
 
 app.get("/", (req, res) => {

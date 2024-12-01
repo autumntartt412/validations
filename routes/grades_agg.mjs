@@ -18,6 +18,7 @@ const router = express.Router();
  * - Homework: 20%
  */
 
+
 // http://localhost:5050/grades_agg/learner/2/avg-class
 
 // Get the weighted average of a specified learner's grades, per class
@@ -84,7 +85,6 @@ router.get("/learner/:id/avg-class", async (req, res) => {
   else res.send(result).status(200);
 });
 
-// http://localhost:5050/grades_agg/learner/2/avg-class
 
 // Create a GET route at /grades/stats
 // Within this route, create an aggregation pipeline that returns
@@ -177,6 +177,7 @@ router
 // Create a compound index on learner_id and class_id,
 //  in that order, both ascending.
 
+
 // http://localhost:5050/grades_agg/stats/339
 router
   .route("/stats/:id")
@@ -260,6 +261,7 @@ router
     }
   });
 
+
   // DESCENDING ORDER 
     const createIndexes = async () => {
     const collection = await db.collection("grades");
@@ -271,31 +273,30 @@ router
 
 
   //VALIDATION
-
-  // async() => {
-  // await db.createCollection("grades", {
-  //   validator: {
-  //     $jsonSchema: {
-  //       bsonType: "object",
-  //       title: "Grades Validation",
-  //       required: ["class_id", "learner_id"],
-  //       properties: {
-  //         class_id: {
-  //           bsonType: "int",
-  //           minimum: 0,
-  //           maximum: 300,
-  //           description: "integer must be between 0 and 300"
-  //         },
-  //         learner_id: {
-  //           bsonType: "int",
-  //           minimum: 0,
-  //           description: "integer must be greater than or equal to 0"
-  //         },
-  //       },
-  //     },
-  //   },
-  //   validationAction: "warn" 
-  // });
-  // };
+  async() => {
+  await db.createCollection("grades", {
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        title: "Grades Validation",
+        required: ["class_id", "learner_id"],
+        properties: {
+          class_id: {
+            bsonType: "int",
+            minimum: 0,
+            maximum: 300,
+            description: "integer must be between 0 and 300"
+          },
+          learner_id: {
+            bsonType: "int",
+            minimum: 0,
+            description: "integer must be greater than or equal to 0"
+          },
+        },
+      },
+    },
+    validationAction: "warn" 
+  });
+  };
 
 export default router;
