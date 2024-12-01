@@ -15,7 +15,6 @@ const gradesSchema = {
 };
 
 // Find invalid documents
-
 app.get("/", async (req, res) => {
   let collection = await db.collection("grades");
 
